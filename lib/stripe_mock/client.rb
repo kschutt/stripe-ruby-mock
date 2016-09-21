@@ -2,11 +2,11 @@ module StripeMock
   class Client
     attr_reader :port, :state
 
-    def initialize(port)
+    def initialize(port,host='localhost')
       @port = port
 
       DRb.start_service
-      @pipe = DRbObject.new_with_uri "druby://localhost:#{port}"
+      @pipe = DRbObject.new_with_uri "druby://#{host}:#{port}"
 
       # Ensure client can connect to server
       timeout_wrap(5) { @pipe.ping }
