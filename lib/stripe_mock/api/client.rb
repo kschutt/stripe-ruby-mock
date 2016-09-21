@@ -4,12 +4,12 @@ module StripeMock
     @client
   end
 
-  def self.start_client(port=4999)
+  def self.start_client(port=4999,host='localhost')
     return false if @state == 'live'
     return @client unless @client.nil?
 
     alias_stripe_method :request, StripeMock.method(:redirect_to_mock_server)
-    @client = StripeMock::Client.new(port)
+    @client = StripeMock::Client.new(port,host)
     @state = 'remote'
     @client
   end
