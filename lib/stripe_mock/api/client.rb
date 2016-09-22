@@ -30,11 +30,6 @@ module StripeMock
   def self.redirect_to_mock_server(method, url, api_key, params={}, headers={}, api_base_url=nil)
     handler = Instance.handler_for_method_url("#{method} #{url}")
 
-    if mock_error = client.error_queue.error_for_handler_name(handler[:name])
-      client.error_queue.dequeue
-      raise mock_error
-    end
-
     Stripe::Util.symbolize_names client.mock_request(method, url, api_key, params, headers)
   end
 
