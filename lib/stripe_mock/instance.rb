@@ -91,14 +91,10 @@ module StripeMock
           puts "                  #{params}"
         end
 
-        if mock_error = @error_queue.error_for_handler_name(handler[:name])
-          @error_queue.dequeue
-          raise mock_error
-        else
           res = self.send(handler[:name], handler[:route], method_url, params, headers)
           puts "           [res]  #{res}" if @debug == true
           [res, api_key]
-        end
+      
       else
         puts "[StripeMock] Warning : Unrecognized endpoint + method : [#{method} #{url}]"
         puts "[StripeMock] params: #{params}" unless params.empty?
